@@ -13,9 +13,6 @@ public class MultiTouch : MonoBehaviour
     //弾いた時の傾き
     private float flickAngle = -20;
 
-    //タッチ情報
-    Touch touch;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -32,32 +29,35 @@ public class MultiTouch : MonoBehaviour
     {
         if (Input.touchCount > 0)
         {
-            this.touch = Input.touches[0];
+            //タッチ情報の取得
+            Touch[] touch = Input.touches;
 
-            //左画面をタップした時左フリッパーを動かす
-            if (touch.phase == TouchPhase.Began && touch.position.x <= Screen.width/2 && tag == "LeftFripperTag")
+            for (int i = 0; i < touch.Length; i++)
             {
-                SetAngle(this.flickAngle);
-            }
-            
-            //右画面をタップした時左フリッパーを動かす
-            if (touch.phase == TouchPhase.Began && touch.position.x >= Screen.width / 2 && tag == "RightFripperTag")
-            {
-                SetAngle(this.flickAngle);
-            }
+                //左画面をタップした時左フリッパーを動かす
+                if (touch[i].phase == TouchPhase.Began && touch[i].position.x <= Screen.width / 2 && tag == "LeftFripperTag")
+                {
+                    SetAngle(this.flickAngle);
+                }
+                //右画面をタップした時左フリッパーを動かす
+                if (touch[i].phase == TouchPhase.Began && touch[i].position.x >= Screen.width / 2 && tag == "RightFripperTag")
+                {
+                    SetAngle(this.flickAngle);
+                }
 
-            //左画面のタップが終わった時フリッパーを元に戻す
-            if (touch.phase == TouchPhase.Ended && tag == "LeftFripperTag")
-            {
-                SetAngle(this.defaultAngle);
-            }
-            
-            //右画面のタップが終わった時フリッパーを元に戻す
-            if (touch.phase == TouchPhase.Ended && tag == "RightFripperTag")
-            {
-                SetAngle(this.defaultAngle);
-            }
+                //左画面のタップが終わった時フリッパーを元に戻す
+                if (touch[i].phase == TouchPhase.Ended && touch[i].position.x <= Screen.width / 2 && tag == "LeftFripperTag")
+                {
+                    SetAngle(this.defaultAngle);
+                }
 
+                //右画面のタップが終わった時フリッパーを元に戻す
+                if (touch[i].phase == TouchPhase.Ended && touch[i].position.x >= Screen.width / 2 && tag == "RightFripperTag")
+                {
+                    SetAngle(this.defaultAngle);
+                }
+
+            }
         }
     }
 
@@ -68,5 +68,7 @@ public class MultiTouch : MonoBehaviour
         jointSpr.targetPosition = angle;
         this.myHingeJoint.spring = jointSpr;
     }
+
+    
 }
 

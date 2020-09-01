@@ -21,8 +21,7 @@ public class ScoreManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		//スコアの表示
-		this.scoreText.GetComponent<Text>().text = "得点:" + score + "点";
+		
 	}
 
 	//衝突時に呼ばれる関数
@@ -35,14 +34,24 @@ public class ScoreManager : MonoBehaviour
 		if (tag == "SmallStarTag")
 		{
 			score += 10;
+
+			//スコアの表示
+			this.scoreText.GetComponent<Text>().text = "得点:" + score + "点";
 		}
 		else if (tag == "LargeStarTag" || tag == "SmallCloudTag")
 		{
 			score += 20;
+
+			//スコアの表示
+			this.scoreText.GetComponent<Text>().text = "得点:" + score + "点";
 		}
 		else if (tag == "LargeCloudTag")
 		{
 			score += 50;
+
+			//スコアの表示
+			this.scoreText.GetComponent<Text>().text = "得点:" + score + "点";
 		}
+
 	}
 }
