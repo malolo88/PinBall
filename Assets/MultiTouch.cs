@@ -12,10 +12,9 @@ public class MultiTouch : MonoBehaviour
     //弾いた時の傾き
     private float flickAngle = -20;
 
-    //左画面タッチの情報
-    int leftFinger = -1;
-    //右画面タッチの情報
-    int rightFinger = -1;
+    //タッチの情報
+    int fingerID = -1;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -42,23 +41,23 @@ public class MultiTouch : MonoBehaviour
                 if (touch[i].phase == TouchPhase.Began && touch[i].position.x <= Screen.width / 2 && tag == "LeftFripperTag")
                 {
                     SetAngle(this.flickAngle);
-                    leftFinger = touch[i].fingerId;
+                    fingerID = touch[i].fingerId;
                 }
                 //右画面をタップした時左フリッパーを動かす
                 if (touch[i].phase == TouchPhase.Began && touch[i].position.x >= Screen.width / 2 && tag == "RightFripperTag")
                 {
                     SetAngle(this.flickAngle);
-                    rightFinger = touch[i].fingerId;
+                    fingerID = touch[i].fingerId;
                 }
 
                 //左画面のタップが終わった時フリッパーを元に戻す
-                if (touch[i].phase == TouchPhase.Ended && touch[i].fingerId == leftFinger && tag == "LeftFripperTag")
+                if (touch[i].phase == TouchPhase.Ended && touch[i].fingerId == fingerID && tag == "LeftFripperTag")
                 {
                     SetAngle(this.defaultAngle);
                 }
 
                 //右画面のタップが終わった時フリッパーを元に戻す
-                if (touch[i].phase == TouchPhase.Ended && touch[i].fingerId == rightFinger && tag == "RightFripperTag")
+                if (touch[i].phase == TouchPhase.Ended && touch[i].fingerId == fingerID && tag == "RightFripperTag")
                 {
                     SetAngle(this.defaultAngle);
                 }
